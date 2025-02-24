@@ -7,6 +7,9 @@
 from flask import Flask, request, make_response
 import requests
 
+# 目标URL(e.g. Ollama API http://127.0.0.1:11434/)
+TARGET_URL = 'https://www.example.com/'
+
 app = Flask(__name__)
 
 
@@ -31,7 +34,6 @@ def protected_route():
     :return:
     """
     # 目标URL（固定或动态构造）
-    target_url = 'https://www.example.com/'  # 固定目标
     # 或动态路径：target_url = f'https://www.example.com{request.full_path}'
 
     # 构造请求头（移除Host避免冲突）
@@ -41,7 +43,7 @@ def protected_route():
         # 使用requests转发原始请求
         resp = requests.request(
             method=request.method,
-            url=target_url,
+            url=TARGET_URL,
             headers=headers,
             data=request.get_data(),
             params=request.args,
